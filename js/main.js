@@ -9,31 +9,86 @@ const toggleShoppingCartDropdown = document.querySelector('.product-detail')
 
 const cardsContainers = document.querySelector('.cards-container')
 
+const productoDetailContainer = document.querySelector('.product-more-detail')
+const productDetailCloseIcon = document.querySelector('.product-detail-close')
 
-const aryInactiveElements = []
+
+//convirtiendo una array de tipo nodeList a un array normal 
+const closedEvent = document.querySelectorAll('.inactive')//nodeList
+
+const arrClosedEvent = [].slice.call(closedEvent)//array
+    // for (let value = 0; value < arrClosedEvent.length; value++) {
+    //     const elements = arrClosedEvent[value];}
+
+// const aryInactiveElements = []
+// aryInactiveElements.push(closedEvent)
+
+    // for (let value = 0; value < arrClosedEvent.length; value++) {
+    //     const element = arrClosedEvent[value];
+    //         if (!element.classList.contains('inactive')) {
+    //             element.classList.add('inactive')
+    //             arrClosedEvent.splice(1, 1) //indice, numero de elementos a eliminar, elemento a añadir 
+    //             console.log('no contiene')
+    //         } else {
+    //             console.log('contiene')
+    //         }}
 
 function toggleUserMenu(){//método 1. forzando ocultar las otras 2
-    toggleDropdownMobileMenu.classList.add('inactive')
-    toggleShoppingCartDropdown.classList.add('inactive')
-    toggleMenuUser.classList.toggle('inactive')
+
+  var isSomeOpen = toggleShoppingCartDropdown.classList.contains('inactive')
+      if (!isSomeOpen) {
+        toggleShoppingCartDropdown.classList.add('inactive')}
+
+  var isSomeOpen = productoDetailContainer.classList.contains('inactive')
+      if (!isSomeOpen) {
+        productoDetailContainer.classList.add('inactive')}
+
+  toggleMenuUser.classList.toggle('inactive')
 }
 
 function toggleMobileMenu() {
-    toggleMenuUser.classList.add('inactive')
-    toggleShoppingCartDropdown.classList.add('inactive')
-    toggleDropdownMobileMenu.classList.toggle('inactive')
+
+  var isSomeOpen = toggleShoppingCartDropdown.classList.contains('inactive')
+      if (!isSomeOpen) {
+        toggleShoppingCartDropdown.classList.add('inactive')}
+
+  var isSomeOpen = productoDetailContainer.classList.contains('inactive')
+      if (!isSomeOpen) {
+        productoDetailContainer.classList.add('inactive')}
+
+  toggleDropdownMobileMenu.classList.toggle('inactive')
 }
 
 function toggleShoppingCartMenu() {
-    toggleMenuUser.classList.add('inactive')
-    toggleDropdownMobileMenu.classList.add('inactive')
-    toggleShoppingCartDropdown.classList.toggle('inactive')
-}
 
+  var isSomeOpen = toggleMenuUser.classList.contains('inactive')
+      if (!isSomeOpen) {
+        toggleMenuUser.classList.add('inactive')}
+
+  var isSomeOpen = toggleDropdownMobileMenu.classList.contains('inactive')
+      if (!isSomeOpen) {
+        toggleDropdownMobileMenu.classList.add('inactive')}
+
+  var isSomeOpen = productoDetailContainer.classList.contains('inactive')
+      if (!isSomeOpen) {
+        productoDetailContainer.classList.add('inactive')}
+
+  toggleShoppingCartDropdown.classList.toggle('inactive')
+  }
+
+//--------------------
+  function openProductDetailAside(){
+    productoDetailContainer.classList.remove('inactive')
+  }
+
+  function closedProductDetailAside(){
+    productoDetailContainer.classList.add('inactive')
+  }
 
 emailMenuUser.addEventListener('click', toggleUserMenu)
 dropdownMobileMenu.addEventListener('click', toggleMobileMenu)
 shoppingCartDropdown.addEventListener('click', toggleShoppingCartMenu)
+productDetailCloseIcon.addEventListener('click', closedProductDetailAside)
 
 //Creando Product List
 
@@ -65,6 +120,7 @@ function renderProducts(arr) {
         const productImg = document.createElement('img') //product = {name, price, image} -> product.image
           productImg.setAttribute('src', product.image)
           productImg.setAttribute('alt', product.textAlt)
+          productImg.addEventListener('click', openProductDetailAside)
 
         const productInfo = document.createElement('div')
               productInfo.classList.add('product-info')
@@ -90,4 +146,4 @@ cardsContainers.appendChild(productoCard)
 }
 
 renderProducts(productList)
-// -----
+
